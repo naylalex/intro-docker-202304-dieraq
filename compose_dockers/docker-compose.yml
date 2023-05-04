@@ -1,0 +1,20 @@
+version: '3.9'
+# we'll keep the version for now to work in Compose and Swarm
+
+services:
+  db:
+    image: postgres:10.0-alpine
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d/
+
+  words:
+    build: words
+    image: words
+    deploy:
+      replicas: 1
+
+  web:
+    build: web
+    image: web
+    ports:
+     - "8080:80"
